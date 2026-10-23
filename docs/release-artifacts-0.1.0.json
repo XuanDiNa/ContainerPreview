@@ -1,0 +1,30 @@
+{
+  "version": "0.1.0",
+  "tag": "v0.1.0",
+  "supportedGameVersions": ["1.26.45.01", "1.26.51.01", "1.26.52.03"],
+  "archive": {
+    "name": "ContainerPreview_0.1.0_MC26.45-26.51-26.52.zip",
+    "size": 276631,
+    "sha256": "BC2A899DEB38E457CCE8A58CEB34671E615FA672A1DB233EAF4D608251C7AC45"
+  },
+  "retainedDll": {
+    "size": 544256,
+    "startupIdentifier": "0.1.0-test31",
+    "sha256": "92F2C95A28BB317FA6B2F6E2B02119CF300760E20769C1CCBCF4934F250324A8",
+    "focusedManualAcceptance": ["1.26.45.01", "1.26.51.01", "1.26.52.03"]
+  },
+  "freshPublicRebuild": {
+    "sha256": "39178AB2DB5EF8AFC6183CF0A06702BBD47CB8051F983C90F5E0C51869D5984B",
+    "offlineOnly": true,
+    "published": false
+  },
+  "verification": {
+    "cppExecutions": 48,
+    "cppChecks": 8742,
+    "cppFailures": 0,
+    "pythonTests": 18,
+    "zipMembers": 8,
+    "nativeSourceFilesIdentical": 36,
+    "testFilesIdentical": 16
+  }
+}
