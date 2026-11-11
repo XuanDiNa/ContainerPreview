@@ -1,4 +1,47 @@
-# Current verification — 0.1.1-test4-leftalt
+# Current verification — 0.1.1-test5-compat
+
+The compatibility candidate accepts all six currently available exact images:
+original and launcher for **1.26.45.01 / 1.26.51.01 / 1.26.52.03**. The newly
+reviewed 26.51 launcher preserves every original section descriptor and payload,
+including code, vtables, data, imports and relocations. It adds a non-executable
+loader import section. See the [static comparison](launcher-26.51-review.json).
+The existing 26.51 native RVAs and entry guards are unchanged. Both reviewed
+launcher hashes are pinned; no version-label or text-only admission was added.
+
+Fresh public-copy Debug and Release runs each passed **24 executions / 4,427
+checks / zero failures**, plus 18 Python artifact tests and 431 shared binding
+checks. A regression first reproduced refusal of the current 26.51 launcher
+(450 checks, one failure), then passed after the compatibility fix. Mutating
+non-code bytes still fails complete-file verification. The first parallel
+Debug build hit MSVC C1069; a serial continuation succeeded before testing.
+The clean serial Release rebuild succeeded.
+
+The new Release DLL is **554,496 bytes**, SHA-256
+`E9D315D953C8ABFA2484D3304BE0AA0AD4CD2B7BC36F0BD374717C753BAC814F`.
+The update ZIP is **271,694 bytes**, SHA-256
+`BD4D067D6AAC899A41EA9B226E19DC5B3358B6F4F7DFC09EAF2ED0898276360D`.
+The eight-entry update package contains only ContainerPreview and instructions;
+user config is omitted. All 63 public/development build and runtime inputs
+match byte-for-byte. Detailed hashes and the six-image matrix are in the
+[verification record](release-artifacts-0.1.1-test5-compat.json).
+
+**Gameplay acceptance of this new DLL is pending for all three versions.**
+Earlier manual results are not transferred. The historical 26.51 launcher
+hash remains supported in source but was unavailable for a fresh file check.
+Stable 0.1.0 and test4 retain their original artifacts. See
+[installation and focused testing](update-0.1.1-test5-compat.md).
+
+繁體中文：本版修復目前已核實的 26.51 啟動器映像拒絕載入；26.45／26.51／26.52
+目前六個原始與啟動器映像均通過離線檢查。靜態比對確認 26.51 原有九個區段
+完全相同，僅增加不可執行的載入器匯入區段，因此沿用原有精確位址與入口保護，
+並保留兩個完整啟動器雜湊，沒有只按版本或程式碼雜湊放行。
+Debug／Release 各 4,427 項、18 項封裝測試、431 項組合鍵檢查通過，新增的
+非程式碼竄改檢查也維持拒絕。Debug 初次並行建置遇到 C1069，改為循序建置後
+成功再執行測試；Release 乾淨循序建置成功。新 DLL 與 ZIP 雜湊見上方，
+63 個公開／開發輸入逐位元組一致。**三版本均仍待此新 DLL 的遊戲驗收**。
+舊 26.51 啟動器雜湊保留，但這輪缺少該舊檔，未重新核對；正式版及 test4 資產不變。
+
+# Historical verification — 0.1.1-test4-leftalt
 
 This is a **prerelease**, not a replacement gameplay-accepted release. The
 frozen matching-bundle DLL is 553,984 bytes, SHA-256

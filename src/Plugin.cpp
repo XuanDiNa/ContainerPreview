@@ -157,7 +157,7 @@ DWORD WINAPI Worker(void*){
         HMODULE pinned{};if(!GetModuleHandleExW(GET_MODULE_HANDLE_EX_FLAG_PIN|GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS,reinterpret_cast<LPCWSTR>(&Worker),&pinned)){status.store(-1);return 0;}
         wchar_t path[32768]{};auto size=GetModuleFileNameW(module,path,32768);if(!size || size>=32768){status.store(-1);return 0;}
         directory=std::filesystem::path(path).parent_path();
-        Log("0.1.1-test4-leftalt starting; NONE holdKey support; friend-route/test32; exact Bedrock 1.26.45.01 / 1.26.51.01 / 1.26.52.03; owned address-kind3 remote sessions; separate45 native ABI and layouts; runtime seams remain exact; Shift/native-sneak admission pause before background use; unsubmitted-only recovery; held-item Hive preview policy preserved; returned owner is not a unique request correlation token");
+        Log("0.1.1-test5-compat starting; keyboard binding contract2; reviewed26.51 launcher; friend-route/test32; exact Bedrock 1.26.45.01 / 1.26.51.01 / 1.26.52.03; owned address-kind3 remote sessions; separate45 native ABI and layouts; runtime seams remain exact; Shift/native-sneak admission pause before background use; unsubmitted-only recovery; held-item Hive preview policy preserved; returned owner is not a unique request correlation token");
         ProfileDiagnostic diagnostic;
         if(!profile.Initialize(GetModuleHandleW(nullptr),&diagnostic)){status.store(-1);Log("Inactive: "+DescribeProfileDiagnostic(diagnostic));return 0;}
         Log(std::string("Image check: ")+VersionName(CurrentVersion())+"; "+DescribeProfileDiagnostic(diagnostic));

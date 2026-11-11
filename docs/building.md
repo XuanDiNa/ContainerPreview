@@ -12,7 +12,7 @@ xmake build -r -y
 py -3.11 -m unittest discover -s tests -p test_artifacts.py
 ```
 
-The current source is the **0.1.1-test4-leftalt prerelease**. To run the core
+The current source is the **0.1.1-test5-compat prerelease**. To run the core
 tests after a build, use `xmake run ContainerPreviewCoreTests`; the other
 `ContainerPreview*Tests` targets are listed in `xmake.lua`. The binding SDK is
 header-only and has no ModMenu DLL link dependency. For the publication test
@@ -32,7 +32,12 @@ That verifier requires **all six reviewed hashes**. If a local launcher image
 has changed, do not add its hash or bypass the requirement. Run the profile
 target against each reviewed image and use its `reject` argument for an
 unreviewed fixture; record partial coverage explicitly. This publication's
-five-accepted/one-rejected matrix is in the verification record.
+current six-accepted matrix is in the verification record. The current 26.51
+launcher was separately reviewed in test5; it is not an arbitrary hash addition.
+The old full script still targets the historical six-image set, including the
+unavailable earlier 26.51 launcher. For the current matrix, run
+`ContainerPreviewProfileTests` separately against each of the six current
+images, without `reject`, after each Debug/Release build.
 
 The historical 0.1.0 full run executed 48 C++ programs (8742 checks) and
 18 Python artifact tests. Current per-target counts differ. Profile tests inspect image bytes and data-only
@@ -56,8 +61,9 @@ The `-Package` path and eight-flat-member artifact verifier above apply to
 **the v0.1.0 source tag only**, not the current update-only prerelease layout.
 The new ZIP deliberately omits `config.json`; verify its external `.sha256`,
 the checksums in `mods/ContainerPreview`, and the independently pinned DLL hash
-in [keybindings.md](keybindings.md). Do not package a fresh rebuild as the frozen
-candidate: a build is not proof of identical bytes or gameplay acceptance.
+in [the current update instructions](update-0.1.1-test5-compat.md) and verification
+record. Test4 retains its frozen DLL; test5 deliberately ships the new compatibility
+build under a new version. Neither a build nor matching hashes prove gameplay acceptance.
 
 ## 繁體中文
 
@@ -69,10 +75,12 @@ candidate: a build is not proof of identical bytes or gameplay acceptance.
 版本各自的原版與 LeviLauncher 映像。這些是唯讀輸入，不能提交或散布。
 驗證腳本沒有寫死私人電腦路徑。
 
-目前原始碼為 0.1.1-test4-leftalt 預發佈版，可逐個執行 `xmake.lua` 的測試目標；
+目前原始碼為 0.1.1-test5-compat 預發佈版，可逐個執行 `xmake.lua` 的測試目標；
 SDK 僅標頭，無需連結 ModMenu DLL。歷史完整腳本要求六個已審核雜湊，若本機
 啟動器映像不同，不可直接加入白名單或跳過要求；請逐檔執行 ProfileTests，
-未核實映像加 `reject`，並明確記錄未覆蓋的項目。
+未核實映像加 `reject`，並明確記錄未覆蓋的項目。test5 已獨立核實目前的 26.51
+啟動器映像；歷史完整腳本仍要求舊版六映像組合。這輪六個目前映像請在
+Debug／Release 建置後分別執行 `ContainerPreviewProfileTests`，不加 `reject`。
 
 歷史正式版完整流程重編 Debug／Release，執行 48 次 C++ 測試（8742 項檢查）及 18 項
 Python 封裝測試。版本測試只檢查映像位元組與資料模擬，不執行或修改遊戲
@@ -85,5 +93,6 @@ Python 封裝測試。版本測試只檢查映像位元組與資料模擬，不�
 
 上述 `-Package` 與八檔平鋪套件驗證僅適用於 **v0.1.0 原始碼標籤**，不可直接
 套用到目前升級包。新包刻意不含 `config.json`；請核對外部 ZIP 校驗檔、
-`mods/ContainerPreview` 內的逐檔校驗，以及文件中的獨立 DLL 雜湊。重編檔不能
-當作原凍結候選檔；離線建置不證明位元組相同或遊戲驗收通過。
+`mods/ContainerPreview` 內的逐檔校驗，以及目前更新／驗證文件中的獨立 DLL 雜湊。
+test4 原凍結檔保留不變；test5 以新版本明確發佈新的相容性建置。離線建置與
+雜湊相同均不等於遊戲驗收通過。

@@ -1,0 +1,125 @@
+{
+  "gameVersion": "1.26.51.01",
+  "reviewDate": "2026-11-11",
+  "original": {
+    "machine": "AMD64",
+    "timestamp": "0x6AA482FD",
+    "imageSize": 314621952,
+    "checksum": 311310863,
+    "entrypoint": 240669872,
+    "bytes": 311249032,
+    "sha256": "258EC563FD37B3EFCF67C2C5207AA0DF6AB8E20DC09ACF2394380D697CC24DAC"
+  },
+  "reviewedLauncher": {
+    "machine": "AMD64",
+    "timestamp": "0x6AA482FD",
+    "imageSize": 314626048,
+    "checksum": 311271768,
+    "entrypoint": 240669872,
+    "bytes": 311251456,
+    "sha256": "E3BD6B85F5F37C7814B131BA4E0C412957397E2804B71871E6180C773F69605B"
+  },
+  "originalSections": [
+    {
+      "name": ".text",
+      "virtualSize": 240802486,
+      "rva": 4096,
+      "rawSize": 240802816,
+      "rawOffset": 1024,
+      "flags": 1610612768,
+      "sha256": "0CE1026651411CA94636B2B713F4B7D6838ADC3D652A85DDCCDF54E53DE0B4F5"
+    },
+    {
+      "name": ".rdata",
+      "virtualSize": 52636516,
+      "rva": 240807936,
+      "rawSize": 52636672,
+      "rawOffset": 240803840,
+      "flags": 1073741888,
+      "sha256": "1E9DB150356A81C91C02697C334F392F28FF4CB54656AB1DAEEA105EA3704A26"
+    },
+    {
+      "name": ".data",
+      "virtualSize": 8772568,
+      "rva": 293445632,
+      "rawSize": 5414912,
+      "rawOffset": 293440512,
+      "flags": 3221225536,
+      "sha256": "C2C077A5EDAE68B813AAEB0755252ECE10C189706308E8D8A46E2CA0ADBE6A82"
+    },
+    {
+      "name": ".pdata",
+      "virtualSize": 11333496,
+      "rva": 302219264,
+      "rawSize": 11333632,
+      "rawOffset": 298855424,
+      "flags": 1073741888,
+      "sha256": "77C240739F88D6CBE5B71B9DC86D75D08EB662B1CEDC815724B9246EAC1DBEA9"
+    },
+    {
+      "name": ".tls",
+      "virtualSize": 11505,
+      "rva": 313552896,
+      "rawSize": 11776,
+      "rawOffset": 310189056,
+      "flags": 3221225536,
+      "sha256": "F4BFD1CAD8CAA54230ACEB6B8E3C37365E423CDAB3B2F2CE4B325CE4D99E62A4"
+    },
+    {
+      "name": ".xbld",
+      "virtualSize": 260,
+      "rva": 313565184,
+      "rawSize": 512,
+      "rawOffset": 310200832,
+      "flags": 3221225536,
+      "sha256": "371D5BFC31C780A245A492422A8071AE96184D64EB3C60794350A665796D8A42"
+    },
+    {
+      "name": ".rsrc",
+      "virtualSize": 18600,
+      "rva": 313569280,
+      "rawSize": 18944,
+      "rawOffset": 310201344,
+      "flags": 1073741888,
+      "sha256": "3F09D1C2CE25433EBC7FBD51F6487E9E6C3C4E389C4AF7CFBE8EC759ED691B30"
+    },
+    {
+      "name": ".reloc",
+      "virtualSize": 985580,
+      "rva": 313589760,
+      "rawSize": 985600,
+      "rawOffset": 310220288,
+      "flags": 1107296320,
+      "sha256": "AB703D50E257342674C860A023051B42CDD1F22A64EA0535FE861BCCD67F0354"
+    },
+    {
+      "name": ".nimp",
+      "virtualSize": 43520,
+      "rva": 314576896,
+      "rawSize": 43144,
+      "rawOffset": 311205888,
+      "flags": 3221225472,
+      "sha256": "898F13DA4CF533860966B02136334F98913EE63F61C81BD211F645304459AFC7"
+    }
+  ],
+  "allOriginalSectionDescriptorsAndPayloadsIdentical": true,
+  "originalImportsPreservedExactly": true,
+  "unchangedOriginalPayloadFromFileOffset": 1024,
+  "unchangedEntryPoint": true,
+  "onlyChangedDataDirectory": "import table",
+  "addedSection": {
+    "name": ".levildr",
+    "virtualSize": 1774,
+    "rva": 314621952,
+    "rawSize": 2048,
+    "rawOffset": 311249408,
+    "flags": 3221225536,
+    "sha256": "1A6E892ADE4B9F86EA8533A5D6ABEC73F1DBA1364CDA7549BB406CE04558091D"
+  },
+  "addedImport": {
+    "dll": "LeviLauncher.dll",
+    "symbol": "LeviLauncherEntry"
+  },
+  "conclusion": "Reuse existing independently reviewed 26.51 native layouts, RVAs and entry guards; admit only the additional exact full-file SHA-256.",
+  "limits": "Static equivalence is not gameplay acceptance. Original game binaries and analysis databases are not distributed."
+}

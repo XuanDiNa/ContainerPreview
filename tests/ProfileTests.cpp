@@ -177,6 +177,9 @@ int wmain(int argc,wchar_t** argv){
             Check(!VerifyFile(image),"disk-only proof constructor is still protected by full file and text verification");
             image[offset]^=std::byte{1};break;
         }
+        image.back()^=std::byte{1};
+        Check(!VerifyFile(image),"matching PE identity and unchanged text cannot admit altered non-code bytes");
+        image.back()^=std::byte{1};
         image[4096]^=std::byte{1};Check(!VerifyFile(image),"real altered executable is refused");
     }
     std::cout<<checks<<" checks, "<<failures<<" failures\n";return failures?1:0;

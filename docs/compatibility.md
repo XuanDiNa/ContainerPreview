@@ -28,6 +28,12 @@ Unsupported images or incomplete checks stay inactive; entries are not found
 by runtime scanning or guessed version deltas. There are 27 hooks per profile;
 45 has 87 disk / 86 loaded guard records, and 51/52 have 152 / 151.
 
+The test5 prerelease adds the separately reviewed current 26.51 launcher image
+while retaining its earlier exact hash. All original sections match the original
+26.51 image byte-for-byte; [the review](launcher-26.51-review.json) records the
+additional loader import section. This is an exact-image update, not support
+for arbitrary launcher patches. New-DLL gameplay acceptance is still pending.
+
 Server previews wait for matching native container acceptance and complete
 applied contents. Only one operation can be pending. Timeouts, late-reply
 fences, owner checks and manual-interaction priority remain in effect. For the
@@ -82,6 +88,11 @@ credentials or item names/NBT. Review excerpts before sharing them.
 各精確版本分別檢查遊戲映像、程式碼區段及原生入口。不支援或驗證不完整
 就保持停用，不使用執行期掃描或推測版本位移。各版本有 27 個 hook；45
 有 87 個磁碟／86 個載入入口保護紀錄，51／52 則為 152／151。
+
+test5 預發佈版加入獨立核實的目前 26.51 啟動器映像，保留原先的精確雜湊。
+原有區段均與 26.51 原版逐位元組相同，[核對紀錄](launcher-26.51-review.json)
+記錄新增的載入器匯入區段。這是精確映像更新，不支援任意啟動器修改；新 DLL
+仍待遊戲驗收。
 
 伺服器預覽須等原生容器接受相符，且完整內容已套用；同時只允許一個
 待處理操作。保留逾時、延遲回覆、擁有者及手動優先等檢查。Hive 實驗性

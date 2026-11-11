@@ -14,7 +14,7 @@ namespace {
 #include "NativeGuards45.inl"
 struct ImageSpec {
     GameVersion version;ImageIdentity identity;std::size_t size,textSize;
-    char const* hash;char const* textHash;
+    char const* hash;char const* textHash;char const* alternateHash{};
 };
 constexpr ImageSpec images[]={
     {GameVersion::V45,{0x8664,0x6A8378BA,0x12888000,0x12568F46},307657080,240686080,
@@ -28,7 +28,10 @@ constexpr ImageSpec images[]={
     {GameVersion::V51,{0x8664,0x6AA482FD,0x12C0C000,0x128E3A0F},311249032,240802816,
         "258EC563FD37B3EFCF67C2C5207AA0DF6AB8E20DC09ACF2394380D697CC24DAC","0CE1026651411CA94636B2B713F4B7D6838ADC3D652A85DDCCDF54E53DE0B4F5"},
     {GameVersion::V51,{0x8664,0x6AA482FD,0x12C0D000,0x128DA158},311251456,240802816,
-        "1ECE1D37E7762F6B32C20DB355A7F0B199A85FC6A60C59CF693922C999A16AE7","0CE1026651411CA94636B2B713F4B7D6838ADC3D652A85DDCCDF54E53DE0B4F5"},
+        "1ECE1D37E7762F6B32C20DB355A7F0B199A85FC6A60C59CF693922C999A16AE7","0CE1026651411CA94636B2B713F4B7D6838ADC3D652A85DDCCDF54E53DE0B4F5",
+        // Same exact PE identity and all original section bytes; the reviewed
+        // launcher-only import section differs. Both full-file hashes stay pinned.
+        "E3BD6B85F5F37C7814B131BA4E0C412957397E2804B71871E6180C773F69605B"},
 };
 ImageSpec const* ImageFor(ImageIdentity const& id){
     for(auto const& s:images){auto const& k=s.identity;
@@ -88,7 +91,7 @@ bool VerifyFile(std::span<std::byte const> data) noexcept{
                 if(guard.rva<0x1000 || guard.rva-0x1000>s.SizeOfRawData-32 || !MatchEntry(data.subspan(s.PointerToRawData+guard.rva-0x1000,32),std::as_bytes(std::span(guard.bytes))))return false;
             }
         }
-        return found && Hash(data,spec->hash);
+        return found && (Hash(data,spec->hash) || (spec->alternateHash && Hash(data,spec->alternateHash)));
     }catch(...){return false;}
 }
 std::span<EntryGuard const> NativeGuards(GameVersion version){

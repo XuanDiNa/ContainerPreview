@@ -1,0 +1,173 @@
+{
+  "schemaVersion": 1,
+  "version": "0.1.1-test5-compat",
+  "releaseType": "prerelease",
+  "verificationDate": "2026-11-11",
+  "scope": "ContainerPreview compatibility update only; no other plugin or installed user configuration is changed.",
+  "archive": {
+    "file": "ContainerPreview-0.1.1-test5-compat-update.zip",
+    "bytes": 271694,
+    "sha256": "BD4D067D6AAC899A41EA9B226E19DC5B3358B6F4F7DFC09EAF2ED0898276360D"
+  },
+  "dll": {
+    "machine": "AMD64",
+    "exports": [
+      "ContainerPreviewInit",
+      "ContainerPreviewStatus"
+    ],
+    "imports": [
+      "bcrypt.dll",
+      "kernel32.dll",
+      "user32.dll"
+    ],
+    "sha256": "E9D315D953C8ABFA2484D3304BE0AA0AD4CD2B7BC36F0BD374717C753BAC814F"
+  },
+  "members": [
+    {
+      "file": "UPDATE.md",
+      "bytes": 4144,
+      "sha256": "170375B083ED375E692CF5A699C546AC44AD09A035F805C7E28E111949746434"
+    },
+    {
+      "file": "mods/ContainerPreview/ContainerPreview.dll",
+      "bytes": 554496,
+      "sha256": "E9D315D953C8ABFA2484D3304BE0AA0AD4CD2B7BC36F0BD374717C753BAC814F"
+    },
+    {
+      "file": "mods/ContainerPreview/SHA256SUMS.txt",
+      "bytes": 511,
+      "sha256": "DDA79BDDABEC644D6D0F2A73122E7336EE7BDD474F7680762AB017A86BB4C138"
+    },
+    {
+      "file": "mods/ContainerPreview/THIRD_PARTY_NOTICES.txt",
+      "bytes": 6645,
+      "sha256": "2AD4EF952CB313BA5F6B5574E2DC7FDF21563FA29F3160E35F0FF9E679707B59"
+    },
+    {
+      "file": "mods/ContainerPreview/config.schema.json",
+      "bytes": 4757,
+      "sha256": "F62F61A9A816617D88C93BF3E33E61E84F80C44E102934AFEA014B765E208EBC"
+    },
+    {
+      "file": "mods/ContainerPreview/manifest.json",
+      "bytes": 131,
+      "sha256": "FE639B8753A2772FE529ACB46DD0699AC6A05848C13D861EDDD842C441088F62"
+    },
+    {
+      "file": "mods/ContainerPreview/mod.json",
+      "bytes": 568,
+      "sha256": "26CC3EB46056FD295CB1F1663CB32C1BC615FB0EFB3F7FA76D43B8993B8C5E3D"
+    },
+    {
+      "file": "mods/ContainerPreview/modmenu.settings.json",
+      "bytes": 958,
+      "sha256": "A7D6FE0E1C7BB786C6705228FEBFEAA4354A5F1F5160FA6EB096CEB435475F58"
+    }
+  ],
+  "schemaValidation": {
+    "modmenuV5": true,
+    "allSevenModifierCombinations": true
+  },
+  "artifactProvenance": "New Release DLL from the public source checkout, frozen after the successful Debug/Release offline verification; older test4 and stable assets are not replaced.",
+  "sourceComparison": {
+    "files": 63,
+    "allByteIdenticalToDevelopmentInputs": true
+  },
+  "offlineVerification": {
+    "debug": {
+      "executions": 24,
+      "checks": 4427,
+      "failures": 0,
+      "dllSha256": "8DC375C21BA0C5F126746DFEBD88F72E43B168CE14C9EB0A8691ABE41BB821E4"
+    },
+    "release": {
+      "executions": 24,
+      "checks": 4427,
+      "failures": 0,
+      "dllSha256": "E9D315D953C8ABFA2484D3304BE0AA0AD4CD2B7BC36F0BD374717C753BAC814F"
+    },
+    "artifactUnitTests": 18,
+    "sharedBindingChecks": 431,
+    "buildNote": "Initial parallel Debug build encountered MSVC C1069; serial continuation completed successfully before the tests. The clean serial Release rebuild passed.",
+    "regression": {
+      "fixture": "Current exact 26.51 launcher",
+      "before": {
+        "checks": 450,
+        "failures": 1
+      },
+      "after": {
+        "checks": 450,
+        "failures": 0
+      },
+      "additionalGuardTest": "Altered non-code bytes are refused even with matching PE identity and unchanged .text."
+    },
+    "imageMatrix": [
+      {
+        "gameVersion": "1.26.45.01",
+        "image": "original",
+        "sha256": "008408E6F544D7987F9CDE4E34C8E853690A65AFD97F8498DA2CD6ED24C4793B",
+        "expected": "accepted",
+        "result": "passed"
+      },
+      {
+        "gameVersion": "1.26.45.01",
+        "image": "launcher",
+        "sha256": "4143182F113D774062809039154248E7AF7578A81C92E54323F7D53361F8EFA1",
+        "expected": "accepted",
+        "result": "passed"
+      },
+      {
+        "gameVersion": "1.26.51.01",
+        "image": "original",
+        "sha256": "258EC563FD37B3EFCF67C2C5207AA0DF6AB8E20DC09ACF2394380D697CC24DAC",
+        "expected": "accepted",
+        "result": "passed"
+      },
+      {
+        "gameVersion": "1.26.51.01",
+        "image": "current launcher",
+        "sha256": "E3BD6B85F5F37C7814B131BA4E0C412957397E2804B71871E6180C773F69605B",
+        "expected": "accepted",
+        "result": "passed"
+      },
+      {
+        "gameVersion": "1.26.52.03",
+        "image": "original",
+        "sha256": "4A92BFA3CE2428B40EE517B7C1125D9F6F79274382DE03846351992663B2E2E4",
+        "expected": "accepted",
+        "result": "passed"
+      },
+      {
+        "gameVersion": "1.26.52.03",
+        "image": "launcher",
+        "sha256": "0B66101DC873434E853A898329CB85CEE0DE52D0AE91AC796EFA0FE05B61522C",
+        "expected": "accepted",
+        "result": "passed"
+      }
+    ],
+    "nativeOffsetsOrEntryGuardsChanged": false,
+    "hashPolicy": "The existing exact 26.51 launcher identity admits two independently pinned full-file SHA-256 values. Complete file size, text hash, disk entries and loaded checks are retained.",
+    "launcherReview": "launcher-26.51-review.json",
+    "historicalLauncher": {
+      "sha256": "1ECE1D37E7762F6B32C20DB355A7F0B199A85FC6A60C59CF693922C999A16AE7",
+      "status": "Retained in source; unavailable for fresh file verification."
+    }
+  },
+  "manualAcceptance": {
+    "currentDll": "pending for all three exact versions",
+    "earlierResults": "Earlier stable or friend-world acceptance does not certify this new DLL.",
+    "friendWorld26_45And26_51": "Untested; prior manual round waived."
+  },
+  "update": {
+    "existingInstallationRequired": true,
+    "includesUserConfig": false,
+    "preserve": [
+      "config.json",
+      "local logs"
+    ],
+    "bindingEditor": "ModMenuBedrock 0.6.0-test5-leftalt or a separately verified compatible version",
+    "instructions": "update-0.1.1-test5-compat.md"
+  },
+  "priorReleases": "Stable v0.1.0 and prerelease v0.1.1-test4-leftalt remain available with their original assets.",
+  "limits": "Offline image/fixture/package verification does not prove gameplay. No game EXE, native RVA or IDA database was modified."
+}
