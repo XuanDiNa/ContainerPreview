@@ -14,6 +14,8 @@ Target Chest() { return {100, 200, 300, 0, 10, 64, -1, TargetKind::Block, 0}; }
 Eligibility Active() { return {true,true,true,true}; }
 Snapshot Sample(Request const& r) { return {r.target,r.generation,1100,true,Contents::Ready,27}; }
 void ConfigTests() {
+    Check(ParseConfig(R"({"holdKey":"CTRL+SHIFT+LALT+K"})")==Config{true,'K',7},"Left Alt hold chord retains full mask");
+    Check(ParseConfig(R"({"holdKey":"CTRL+SHIFT+K"})")==Config{true,'K',3},"public hold chord retains exact key and modifiers");
     Check(ParseConfig("{}") == Config{}, "empty JSON uses enabled Left Alt defaults");
     Check(ParseConfig(R"({"enabled":false,"holdKey":"F5"})") == Config{false,0x74}, "custom key and disabled config are applied");
     Check(ParseConfig(R"({"holdKey":"RALT"})") == Config{true,0xA5}, "right Alt remains distinct from left Alt");

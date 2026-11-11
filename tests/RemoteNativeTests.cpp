@@ -294,7 +294,41 @@ int main(int argc,char** argv){
         Check(!inspect(),"session traversal is bounded before any out of range pointer read");
         local.Vector(1);
         Put(local.network.data(),216,static_cast<void*>(nullptr));Put(local.network.data(),224,static_cast<void*>(nullptr));
-        Check(!inspect() && why.reason==RemoteReason::IdentifierType,"connected kind3 without verified local peer is never classified as remote");
+        auto connectedRoute=inspect();
+        Check(connectedRoute && !connectedRoute->integrated,"connected kind3 with an independently verified session remains remote without a local peer");
+    }
+    // Names the break: the GUID-only remote branch rejects an established
+    // friend-invitation connection before native use. Address kind3 must use
+    // the registered active session, never a GUID fallback or local labeling.
+    {
+        LocalRouteFixture remote;RemoteCheck why{};
+        Put(remote.network.data(),216,static_cast<void*>(nullptr));Put(remote.network.data(),224,static_cast<void*>(nullptr));
+        auto inspect=[&]{return DecodeRemoteRoute(remote.client.data(),base,&why);};
+        for(auto variant:{std::uint8_t{0},std::uint8_t{1},std::uint8_t{2}}){
+            remote.Connected(3,variant);auto accepted=inspect();
+            Check(accepted && !accepted->integrated && accepted->client==reinterpret_cast<std::uintptr_t>(remote.client.data()) &&
+                  accepted->handler==reinterpret_cast<std::uintptr_t>(remote.handler.data()) && why.reason==RemoteReason::Pass,
+                  "friend address variants0/1/2 admit only the registered active remote route");
+        }
+        auto beforeClient=remote.client;auto beforeGame=remote.game;auto beforeNetwork=remote.network;
+        auto beforeHandler=remote.handler;auto beforeSession=remote.session;auto beforeOwner=remote.controllerControl;auto beforeConfig=remote.config;
+        Check(inspect().has_value() && remote.client==beforeClient && remote.game==beforeGame && remote.network==beforeNetwork &&
+              remote.handler==beforeHandler && remote.session==beforeSession && remote.controllerControl==beforeOwner && remote.config==beforeConfig,
+              "friend admission does not modify client network identity session or ownership");
+        remote.Vector(0);Check(!inspect() && why.reason==RemoteReason::SessionMissing,"friend handler alone cannot authorize use without an active session");remote.Vector(1);
+        Put(remote.session.data(),409,std::uint8_t{1});Check(!inspect() && why.reason==RemoteReason::SessionInactive,"closed friend session is refused");Put(remote.session.data(),409,std::uint8_t{0});
+        Put(remote.session.data(),280,static_cast<void*>(nullptr));Check(!inspect() && why.reason==RemoteReason::SessionInactive,"friend session requires a live transport");Put(remote.session.data(),280,remote.transport);
+        Put(remote.session.data(),8,UINT64_C(0x3334));Check(!inspect() && why.reason==RemoteReason::SessionMissing,"friend active address mismatch cannot borrow another session");Put(remote.session.data(),8,UINT64_C(0x3333));
+        Put(remote.config.data(),48,UINT64_C(0x9999));Check(!inspect() && why.reason==RemoteReason::SessionIdentity,"friend session controller must repeat the connected identity");Put(remote.config.data(),48,UINT64_C(0x2222));
+        Put(remote.controllerControl.data(),8,int{0});Check(!inspect() && why.reason==RemoteReason::SessionOwner,"expired friend session owner cannot authorize use");Put(remote.controllerControl.data(),8,int{1});
+        Put(remote.session.data(),424,static_cast<void*>(nullptr));Check(!inspect() && why.reason==RemoteReason::SessionOwner,"missing friend session owner fails closed");Put(remote.session.data(),424,remote.controllerControl.data());
+        remote.sessions[1]=remote.session.data();remote.Vector(2);Check(!inspect() && why.reason==RemoteReason::SessionAmbiguous,"duplicate friend session attribution is refused");remote.Vector(1);
+        Put(remote.handler.data(),960,std::uint8_t{0});Check(!inspect() && why.reason==RemoteReason::Established,"friend session does not bypass connection establishment");Put(remote.handler.data(),960,std::uint8_t{1});
+        Put(remote.handler.data(),88,reinterpret_cast<void*>(1));Check(!inspect() && why.reason==RemoteReason::HandlerClient,"friend session does not bypass current client registration");Put(remote.handler.data(),88,remote.client.data());
+        remote.Connected(3,3);Check(!inspect() && why.reason==RemoteReason::IdentifierType && why.observed==3,"unknown friend address variant is refused without logging its payload");
+        remote.Connected(4,0);Check(!inspect() && why.reason==RemoteReason::IdentifierType,"local-only kind4 cannot become a friend connection");
+        remote.Connected(2,0);Check(!inspect() && why.reason==RemoteReason::IdentifierType,"unverified remote transport kind remains refused");
+        remote.Connected(3,1);Check(inspect().has_value(),"restored valid friend session clears prior refusal diagnostics");
     }
     std::array<std::byte,776> chest{},partner{};Chest(chest.data(),10);Chest(partner.data(),11);
     auto shape=DecodeRemoteChest(chest.data(),base,{10,64,-4});
@@ -733,6 +767,13 @@ int main(int argc,char** argv){
         Put(config45.data(),48,UINT64_C(0x1111));Check(!route45(),"45 own peer endpoint never replaces connected session identity");Put(config45.data(),48,UINT64_C(0x2222));
         session45[409]=std::byte{1};Check(!route45(),"45 inactive local session cannot authorize preview");session45[409]=std::byte{};
         Put(controllerOwner45.data(),8,int{0});Check(!route45(),"45 retired session controller fails closed");Put(controllerOwner45.data(),8,int{1});
+        Put(network45.data(),216,static_cast<void*>(nullptr));Put(network45.data(),224,static_cast<void*>(nullptr));
+        auto friendRoute45=route45();Check(friendRoute45 && !friendRoute45->integrated,"45 friend connection uses identifier648 and active registered session without a local peer");
+        Put(config45.data(),48,UINT64_C(0x9999));Check(!route45(),"45 friend controller identity mismatch fails closed");Put(config45.data(),48,UINT64_C(0x2222));
+        session45[409]=std::byte{1};Check(!route45(),"45 closed friend session cannot authorize background opening");session45[409]=std::byte{};
+        Put(handler45.data(),664,std::uint8_t{3});Check(!route45(),"45 unknown friend address variant fails closed");Put(handler45.data(),664,std::uint8_t{1});
+        Put(handler45.data(),816,std::uint32_t{4});Check(!route45(),"45 local-only kind4 remains refused without a local peer");Put(handler45.data(),816,std::uint32_t{3});
+        Check(route45().has_value(),"45 friend route recovers when the established owned connection is restored");
         std::array<std::byte,824> chest45{},partner45{},ender45{};
         BlockPosition pos45{10,64,-4};
         auto chestFields45=[&](void* p){Put(p,0,base+0xE92E240);Put(p,40,base+0xE8BCF20);Put(p,272,base+0xE92E360);Put(p,20,std::uint8_t{2});Put(p,8,int{10});Put(p,12,int{64});Put(p,16,int{-4});};

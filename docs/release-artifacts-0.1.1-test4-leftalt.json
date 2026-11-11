@@ -1,0 +1,175 @@
+{
+  "schemaVersion": 1,
+  "version": "0.1.1-test4-leftalt",
+  "releaseType": "prerelease",
+  "verificationDate": "2026-11-11",
+  "scope": "ContainerPreview only; ModMenu and the other six plugins are not bundled.",
+  "artifactProvenance": "Frozen matching-bundle DLL and update ZIP; verification rebuilds are not shipped.",
+  "archive": {
+    "file": "ContainerPreview-0.1.1-test4-leftalt-update.zip",
+    "bytes": 282008,
+    "sha256": "614E5CE9660190E152E6DAF79C0A7DA9540BC021843876638645D9D2E95D6755"
+  },
+  "members": [
+    {
+      "file": "UPDATE.md",
+      "bytes": 5386,
+      "sha256": "55AEB6F278927A1DE89C41FFA70EF189DFA1188CB0AD19FE70B7A7C95CECB11F"
+    },
+    {
+      "file": "mods/ContainerPreview/ContainerPreview.dll",
+      "bytes": 553984,
+      "sha256": "9C38BD8AF77D461F6BB940ED80F485DAAF69A8825486CCC19F3D36E0848A0083"
+    },
+    {
+      "file": "mods/ContainerPreview/SHA256SUMS.txt",
+      "bytes": 511,
+      "sha256": "63BA456D9407FBA49C7AE5C813648DF4F6EE348845F1265252AC49CF465EF5E9"
+    },
+    {
+      "file": "mods/ContainerPreview/THIRD_PARTY_NOTICES.txt",
+      "bytes": 6645,
+      "sha256": "2AD4EF952CB313BA5F6B5574E2DC7FDF21563FA29F3160E35F0FF9E679707B59"
+    },
+    {
+      "file": "mods/ContainerPreview/config.schema.json",
+      "bytes": 4757,
+      "sha256": "F62F61A9A816617D88C93BF3E33E61E84F80C44E102934AFEA014B765E208EBC"
+    },
+    {
+      "file": "mods/ContainerPreview/manifest.json",
+      "bytes": 132,
+      "sha256": "C95C63B443CAD6B3A0D425354B40E4F8CDA8675E4D09BB191CF5D3B8B5BA0553"
+    },
+    {
+      "file": "mods/ContainerPreview/mod.json",
+      "bytes": 501,
+      "sha256": "17D2E42FEEAACAE8158967D64165107CE92C35723D819FF547C61A8AB93B09F6"
+    },
+    {
+      "file": "mods/ContainerPreview/modmenu.settings.json",
+      "bytes": 959,
+      "sha256": "4EEEA17F020969C9058D69785FD10617C53AB733A7966A22C00E25132B6F2BC5"
+    }
+  ],
+  "dll": {
+    "machine": "AMD64",
+    "exports": [
+      "ContainerPreviewInit",
+      "ContainerPreviewStatus"
+    ],
+    "imports": [
+      "bcrypt.dll",
+      "kernel32.dll",
+      "user32.dll"
+    ],
+    "sha256": "9C38BD8AF77D461F6BB940ED80F485DAAF69A8825486CCC19F3D36E0848A0083"
+  },
+  "source_comparison": {
+    "files": 63,
+    "all_byte_identical_to_development_inputs": true,
+    "sdk_contract": 2,
+    "sdk_sha256": "C1C00C4EA0D41424F736020A79B2AC191AAA9523D36B451B4E6BEF6C4DE3D7B8"
+  },
+  "schema_validation": {
+    "modmenu_v5": true,
+    "config_schema": true,
+    "all_seven_modifier_combinations": true
+  },
+  "offlineVerification": {
+    "publicCheckout": {
+      "debug": {
+        "executions": 24,
+        "checks": 4412,
+        "failures": 0,
+        "dllSha256": "97AE05C3EB3E7081CD0AA36184F1B89BC4A72F6F584B63A039F638E0344F1B8A"
+      },
+      "release": {
+        "executions": 24,
+        "checks": 4412,
+        "failures": 0,
+        "dllSha256": "CD68DD0CC6B3B66E78C80BEDAAFB0DA988817531F78BEE80DF51C8E1F8144F78"
+      },
+      "artifactUnitTests": 18,
+      "compilerWarnings": 0
+    },
+    "sharedBindingContract": {
+      "version": 2,
+      "checks": 431,
+      "failures": 0
+    },
+    "nativeProfileGuardsChanged": false,
+    "imageMatrix": [
+      {
+        "gameVersion": "1.26.45.01",
+        "image": "original",
+        "sha256": "008408E6F544D7987F9CDE4E34C8E853690A65AFD97F8498DA2CD6ED24C4793B",
+        "expected": "accepted",
+        "result": "passed"
+      },
+      {
+        "gameVersion": "1.26.45.01",
+        "image": "launcher",
+        "sha256": "4143182F113D774062809039154248E7AF7578A81C92E54323F7D53361F8EFA1",
+        "expected": "accepted",
+        "result": "passed"
+      },
+      {
+        "gameVersion": "1.26.51.01",
+        "image": "original",
+        "sha256": "258EC563FD37B3EFCF67C2C5207AA0DF6AB8E20DC09ACF2394380D697CC24DAC",
+        "expected": "accepted",
+        "result": "passed"
+      },
+      {
+        "gameVersion": "1.26.51.01",
+        "image": "current launcher",
+        "sha256": "E3BD6B85F5F37C7814B131BA4E0C412957397E2804B71871E6180C773F69605B",
+        "expected": "rejected",
+        "result": "passed"
+      },
+      {
+        "gameVersion": "1.26.52.03",
+        "image": "original",
+        "sha256": "4A92BFA3CE2428B40EE517B7C1125D9F6F79274382DE03846351992663B2E2E4",
+        "expected": "accepted",
+        "result": "passed"
+      },
+      {
+        "gameVersion": "1.26.52.03",
+        "image": "launcher",
+        "sha256": "0B66101DC873434E853A898329CB85CEE0DE52D0AE91AC796EFA0FE05B61522C",
+        "expected": "accepted",
+        "result": "passed"
+      }
+    ],
+    "missingReviewedImage": {
+      "gameVersion": "1.26.51.01",
+      "image": "historically accepted launcher",
+      "sha256": "1ECE1D37E7762F6B32C20DB355A7F0B199A85FC6A60C59CF693922C999A16AE7",
+      "status": "unavailable; not reverified in this round"
+    }
+  },
+  "manualAcceptance": {
+    "currentDll": "pending",
+    "earlierFriendWorldCandidate": "Accepted separately on 1.26.52.03; different DLL, not acceptance of this prerelease.",
+    "friendWorld26_45And26_51": "Untested; earlier manual round waived.",
+    "stable0_1_0": "Original accepted artifact and release assets retained unchanged."
+  },
+  "update": {
+    "existingInstallationRequired": true,
+    "includesUserConfig": false,
+    "preserve": [
+      "config.json",
+      "local logs"
+    ],
+    "bindingEditor": "ModMenuBedrock 0.6.0-test5-leftalt or a separately verified compatible version",
+    "instructions": "keybindings.md"
+  },
+  "notes": [
+    "Offline checks do not prove gameplay, rendering or networking behavior.",
+    "The current 26.51 launcher is refused; no hash whitelist or native-entry guard was relaxed.",
+    "Source comparison covers native sources, public headers, test and build inputs, public verifiers, runtime metadata and shared binding contract.",
+    "SDK MIT license is retained at include/sdk/LICENSE."
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 5,
+  "plugin": {
+    "id": "ContainerPreview",
+    "entry": "ContainerPreview.dll",
+    "versions": [
+      "0.1.1-test4-leftalt"
+    ]
+  },
+  "config": {
+    "file": "config.json",
+    "reload": "hot"
+  },
+  "fields": [
+    {
+      "path": "/enabled",
+      "type": "boolean",
+      "default": true,
+      "label": {
+        "en_US": "Enabled",
+        "zh_TW": "啟用",
+        "zh_CN": "启用"
+      }
+    },
+    {
+      "path": "/holdKey",
+      "type": "binding",
+      "default": "LALT",
+      "label": {
+        "en_US": "Shortcut",
+        "zh_TW": "快捷鍵",
+        "zh_CN": "快捷键"
+      },
+      "description": {
+        "en_US": "Keyboard shortcut; Ctrl/Shift combinations supported. Escape clears the binding.",
+        "zh_TW": "支援 Ctrl／Shift 組合鍵；Esc 解除綁定。",
+        "zh_CN": "支持 Ctrl／Shift 组合键；Esc 解除绑定。"
+      }
+    }
+  ]
+}

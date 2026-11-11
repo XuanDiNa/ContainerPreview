@@ -1,4 +1,35 @@
-# Verification and binary provenance — 0.1.0
+# Current verification — 0.1.1-test4-leftalt
+
+This is a **prerelease**, not a replacement gameplay-accepted release. The
+frozen matching-bundle DLL is 553,984 bytes, SHA-256
+`9C38BD8AF77D461F6BB940ED80F485DAAF69A8825486CCC19F3D36E0848A0083`.
+The update ZIP is 282,008 bytes, SHA-256
+`614E5CE9660190E152E6DAF79C0A7DA9540BC021843876638645D9D2E95D6755`.
+It contains only ContainerPreview, matching metadata and bilingual instructions;
+no user settings, game files, private analysis or other plugins are included.
+
+The development-copy Debug/Release verification on 2026-11-11 completed 24 test
+executions / 4,412 checks per mode, all passing, plus 18 artifact tests and
+431 shared binding-contract checks. Five reviewed exact images were accepted;
+the currently available unreviewed 26.51 launcher was correctly rejected.
+No guard was relaxed. These offline results are not gameplay acceptance.
+
+Public-copy results and the clean source comparison are recorded in the
+[prerelease verification record](release-artifacts-0.1.1-test4-leftalt.json).
+The SDK header retains its MIT notice and [license](../include/sdk/LICENSE).
+The earlier 26.52 friend-world acceptance belongs to a different DLL; 26.45/51
+friend-world manual testing was waived and remains untested.
+
+繁體中文：此版為預發佈候選版，沿用配套包原 DLL；檔案大小及獨立雜湊見上方。
+開發副本 Debug／Release 各 4,412 項檢查、18 項封裝測試及 431 項共用組合鍵
+檢查通過，不代表遊戲驗收。接受五個已核實映像，正確拒絕目前未核實的 26.51
+啟動器映像，沒有放寬保護。朋友世界的舊版人工結果不套用到新 DLL；26.45／51
+朋友世界仍未實測。公開副本驗證與重編檔來源另記於上述紀錄。
+
+See [installation and focused testing](keybindings.md). Stable 0.1.0 and its
+original assets remain unchanged; its historical evidence follows.
+
+# Historical verification and binary provenance — 0.1.0
 
 ## English
 

@@ -1,11 +1,11 @@
 {
   "id": "container-preview",
   "name": "ContainerPreview",
-  "version": "0.1.0",
+  "version": "0.1.1-test4-leftalt",
   "author": "XuanDiNa",
   "dll": "ContainerPreview.dll",
   "config": "config.json",
   "schema": "config.schema.json",
   "supportedGameVersions": ["1.26.45.01", "1.26.51.01", "1.26.52.03"],
-  "description": "Hold Left Alt to preview world containers with native item icons. Supports exact Bedrock 1.26.45.01, 1.26.51.01 and 1.26.52.03. Includes permitted background opening, your own Ender Chest and experimental Hive death-crate support. Retains the three-version user-tested test31 DLL."
+  "description": "Hold a configured key to preview world containers with native item icons. NONE unbinds the key. Retains test32 native profiles and preview behavior; this unbind update needs in-game acceptance."
 }

@@ -1,6 +1,6 @@
 {
   "name": "ContainerPreview",
   "entry": "ContainerPreview.dll",
-  "version": "0.1.0",
+  "version": "0.1.1-test4-leftalt",
   "type": "preload-native"
 }

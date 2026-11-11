@@ -1,4 +1,5 @@
 #include "ContainerPreview/Config.h"
+#include "../include/sdk/ModMenuBinding.h"
 #include <json.hpp>
 #include <cctype>
 #include <string>
@@ -6,6 +7,7 @@ namespace preview {
 namespace {
 std::optional<unsigned> Key(std::string key) {
     for(auto& ch:key) ch=static_cast<char>(std::toupper(static_cast<unsigned char>(ch)));
+    if(key=="NONE")return 0;
     if(key=="LALT" || key=="LEFT_ALT")return 0xA4;
     if(key=="RALT" || key=="RIGHT_ALT")return 0xA5;
     if(key=="LCTRL")return 0xA2;
@@ -36,9 +38,11 @@ std::optional<Config> ParseConfig(std::string_view text) {
     }
     if(json.contains("holdKey")) {
         if(!json["holdKey"].is_string())return {};
-        auto key=Key(json["holdKey"].get<std::string>());
-        if(!key)return {};
-        config.holdKey=*key;
+        auto token=json["holdKey"].get<std::string>();
+        for(auto& ch:token)ch=static_cast<char>(std::toupper(static_cast<unsigned char>(ch)));
+        auto binding=modmenu::binding::ParseInput(token);
+        if(binding){config.holdKey=binding->key;config.holdModifiers=binding->modifiers;}
+        else{auto key=Key(token);if(!key)return {};config.holdKey=*key;}
     }
     return config;
 }

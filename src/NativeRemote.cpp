@@ -92,6 +92,8 @@ bool ActiveLocalSession(void const* network,void const* id,std::uintptr_t b,Remo
     //16AF460 uses the adjusted network+32 vector160/168/176 and supplies
     // its connected identifier to both D92690 and the registered handler.
     // D7E970's own peer112 is the OTHER endpoint, never an equality source.
+    // This native session registration is transport-independent: it also
+    // owns kind3 friend connections with no in-process local peer.
     auto first=At<std::uintptr_t>(network,192),last=At<std::uintptr_t>(network,200),limit=At<std::uintptr_t>(network,208);
     if(!first || first%8 || last%8 || limit%8 || last<first || limit<last || last-first>16*8)
         return Refuse(check,RemoteReason::SessionVector);
@@ -300,6 +302,15 @@ std::optional<RemoteRoute> DecodeRemoteRoute(void const* client,std::uintptr_t b
             if(!LocalIdentifier(ownId) || !LocalIdentifier(connectedId)){
                 Report(check,RemoteReason::LocalControl,(static_cast<std::uint64_t>(At<std::uint32_t>(peer,280))<<32)|type);return {};
             }
+            if(!ActiveLocalSession(network,connectedId,b,check))return {};
+        }else if(type==3){
+            // Friend invitations can use an address identifier without a
+            // local peer. The same generic16AF460 registration still binds
+            // handler, active session and owned controller to one identity.
+            // Keep this a remote route; kind4 remains local-only and no GUID
+            // field is read from this union variant.
+            auto connectedId=static_cast<std::byte const*>(handler)+(old?648:672);
+            if(!LocalIdentifier(connectedId)){Report(check,RemoteReason::IdentifierType,type);return {};}
             if(!ActiveLocalSession(network,connectedId,b,check))return {};
         }else{
             if(type!=0){Report(check,RemoteReason::IdentifierType,type);return {};}

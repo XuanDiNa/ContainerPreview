@@ -1,4 +1,5 @@
 #include "ContainerPreview/Config.h"
+#include "../include/sdk/ModMenuBinding.h"
 #include "ContainerPreview/DiagnosticTrace.h"
 #include "ContainerPreview/HookSet.h"
 #include "ContainerPreview/NativeRender.h"
@@ -45,16 +46,21 @@ bool DestroyStack(void* value){
 // Deliberately pinned: no native calls, thread-affine destruction or unhooking
 // occur from DllMain/DLL_PROCESS_DETACH.
 PreviewBridge* bridge{};
-Config Settings(){auto s=settings.load(std::memory_order_acquire);return {bool(s&1),s>>1};}
+Config Settings(){auto s=settings.load(std::memory_order_acquire);return {bool(s&1),(s>>1)&255u,(s>>9)&7u};}
 bool Foreground(){DWORD pid{};GetWindowThreadProcessId(GetForegroundWindow(),&pid);return pid==GetCurrentProcessId();}
-bool Held(Config const& c){return (GetAsyncKeyState(static_cast<int>(c.holdKey))&0x8000)!=0;}
+bool Held(Config const& c){
+    thread_local modmenu::binding::Tracker tracker;
+    modmenu::binding::Binding binding{c.holdKey,c.holdModifiers};
+    auto sample=modmenu::binding::Sample(binding,[](unsigned k){return (GetAsyncKeyState(static_cast<int>(k))&0x8000)!=0;});
+    return tracker.Update(binding,sample,c.enabled&&Foreground()).held;
+}
 bool ShiftHeld(){return (GetAsyncKeyState(VK_SHIFT)&0x8000)!=0;}
 #include "DiagnosticHooks.inl"
 std::uint64_t ClientHook(void* client,int flag){
     DiagnosticScope clientScope(TraceStage::Client,reinterpret_cast<std::uintptr_t>(client));
     return ForwardOnce(clientOriginal,[&]{
         ++clientCalls;if(status.load(std::memory_order_acquire)!=1 || !bridge)return;
-        auto config=Settings();bool foreground=Foreground(),held=config.enabled && Held(config);
+        auto config=Settings();bool foreground=Foreground(),held=Held(config);
         ClientObservation observation{};
         if(config.enabled && foreground && held){++heldCalls;observation=ObserveClient(profile,client);if(observation.hud)++observations;}
         TraceClientSample(clientScope,client,observation,held,foreground);
@@ -87,7 +93,7 @@ std::uint64_t RenderHook(void* screen,void* context){
     return ForwardOnce(renderOriginal,[&]{
         ++renderCalls;
         if(status.load(std::memory_order_acquire)!=1 || !bridge)return;
-        auto config=Settings();if(!config.enabled || !Foreground() || !Held(config))return;
+        auto config=Settings();if(!Held(config))return;
         ++renderHeld;
         bridge->View(GetTickCount64(),[&](Display display,Snapshot const& snapshot,OwnedStacks const& stacks){
             ++renderViews;
@@ -151,7 +157,7 @@ DWORD WINAPI Worker(void*){
         HMODULE pinned{};if(!GetModuleHandleExW(GET_MODULE_HANDLE_EX_FLAG_PIN|GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS,reinterpret_cast<LPCWSTR>(&Worker),&pinned)){status.store(-1);return 0;}
         wchar_t path[32768]{};auto size=GetModuleFileNameW(module,path,32768);if(!size || size>=32768){status.store(-1);return 0;}
         directory=std::filesystem::path(path).parent_path();
-        Log("0.1.0-test31 starting; exact Bedrock 1.26.45.01 / 1.26.51.01 / 1.26.52.03; separate45 native ABI and layouts; disk-only client-constructor layout evidence; runtime seams remain exact; Shift/native-sneak admission pause before background use; unsubmitted-only recovery; held-item Hive preview policy preserved; returned owner is not a unique request correlation token");
+        Log("0.1.1-test4-leftalt starting; NONE holdKey support; friend-route/test32; exact Bedrock 1.26.45.01 / 1.26.51.01 / 1.26.52.03; owned address-kind3 remote sessions; separate45 native ABI and layouts; runtime seams remain exact; Shift/native-sneak admission pause before background use; unsubmitted-only recovery; held-item Hive preview policy preserved; returned owner is not a unique request correlation token");
         ProfileDiagnostic diagnostic;
         if(!profile.Initialize(GetModuleHandleW(nullptr),&diagnostic)){status.store(-1);Log("Inactive: "+DescribeProfileDiagnostic(diagnostic));return 0;}
         Log(std::string("Image check: ")+VersionName(CurrentVersion())+"; "+DescribeProfileDiagnostic(diagnostic));
@@ -164,7 +170,7 @@ DWORD WINAPI Worker(void*){
             std::string text(static_cast<std::size_t>(length),'\0');file.seekg(0);file.read(text.data(),length);
             if(seen && text==previous)return;previous=text;seen=true;
             if(!ReloadConfig(config,text)){Log("Config rejected; retaining last valid settings");return;}
-            settings.store(unsigned(config.enabled)|(config.holdKey<<1),std::memory_order_release);
+            settings.store(unsigned(config.enabled)|(config.holdKey<<1)|(config.holdModifiers<<9),std::memory_order_release);
             Log(std::string("Config loaded: enabled=")+(config.enabled?"true":"false")+", holdKey="+std::to_string(config.holdKey));
         };
         reload();
